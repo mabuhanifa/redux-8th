@@ -21,7 +21,7 @@ export default function Todo({ todo }) {
   const handleDelete = (todoId) => {};
   const updateTodo = (e) => {
     e.preventDefault();
-
+    
     setEditTodo(false);
   };
   return (

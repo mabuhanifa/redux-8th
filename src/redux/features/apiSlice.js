@@ -22,4 +22,4 @@ export const apiSlice = createApi({
   }),
 });
 
-export const { useGetTodosQuery } = apiSlice;
+export const { useGetTodosQuery, useAddTodoMutation } = apiSlice;

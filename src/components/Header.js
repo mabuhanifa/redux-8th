@@ -3,10 +3,14 @@ import { useDispatch } from "react-redux";
 import tickImage from "../assets/images/double-tick.png";
 import noteImage from "../assets/images/notes.png";
 import plusImage from "../assets/images/plus.png";
+import { useAddTodoMutation } from "../redux/features/apiSlice";
 
 export default function Header() {
   const dispatch = useDispatch();
+
   const [input, setInput] = useState("");
+
+  const [addVideo, { isLoading, isSuccess, isError }] = useAddTodoMutation();
 
   const handleInput = (e) => {
     setInput(e.target.value);
@@ -14,7 +18,10 @@ export default function Header() {
 
   const submitHandler = (e) => {
     e.preventDefault();
-
+    addVideo({
+      text: input,
+      completed: false,
+    });
     setInput("");
   };
 
