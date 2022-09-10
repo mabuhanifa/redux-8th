@@ -7,9 +7,9 @@ export default function TodoList() {
   console.log(data);
   const dispatch = useDispatch();
 
-  // const filterByCompleted = (todo) => {
-  //   return todo.completed !== true;
-  // };
+  const filterByCompleted = (todo) => {
+    return todo.completed !== true;
+  };
   // const filterByStatus = (todo) => {
   //   const { status } = filters;
   //   switch (status) {
@@ -39,7 +39,7 @@ export default function TodoList() {
         // .filter(filterByColors)
         // .filter(filterByCompleted)
 
-        data?.map((todo) => (
+        data?.filter(filterByCompleted).map((todo) => (
           <Todo todo={todo} key={todo.id} />
         ))
       }

@@ -3,12 +3,26 @@ import { useDispatch } from "react-redux";
 import cancelImage from "../assets/images/cancel.png";
 import edit from "../assets/images/edit.png";
 import save from "../assets/images/save.png";
+import {
+  useDeleteTodoMutation,
+  useEditTodoMutation
+} from "../redux/features/apiSlice";
 export default function Todo({ todo }) {
+  const { text, id, completed, color } = todo;
   const dispatch = useDispatch();
+  const [deleteVideo] = useDeleteTodoMutation();
+  const [editVideo, { isLoading, isError, isSuccess }] = useEditTodoMutation();
   const [editTodo, setEditTodo] = useState(false);
   const [value, setValue] = useState("");
-  const { text, id, completed, color } = todo;
-  const handleStatusChange = (todoId) => {};
+
+  const handleStatusChange = (todoId) => {
+    editVideo({
+      id,
+      data: {
+        completed: !completed,
+      },
+    });
+  };
 
   const handleColorChange = (todoId, color) => {};
   const val = (e) => {
@@ -18,10 +32,17 @@ export default function Todo({ todo }) {
       setValue(e.target.value);
     }
   };
-  const handleDelete = (todoId) => {};
+  const handleDelete = (todoId) => {
+    deleteVideo(todoId);
+  };
   const updateTodo = (e) => {
     e.preventDefault();
-    
+    editVideo({
+      id,
+      data: {
+        text: value,
+      },
+    });
     setEditTodo(false);
   };
   return (

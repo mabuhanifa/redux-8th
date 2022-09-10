@@ -9,7 +9,7 @@ export const apiSlice = createApi({
     getTodos: builder.query({
       query: () => "/todos",
       keepUnusedDataFor: 600,
-      providesTags: ["Todos"],
+      providesTags: ["Todos", "Todo"],
     }),
     addTodo: builder.mutation({
       query: (data) => ({
@@ -17,9 +17,33 @@ export const apiSlice = createApi({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["Videos"],
+      invalidatesTags: ["Todos"],
     }),
+    deleteTodo: builder.mutation({
+      query: (id) => ({
+        url: `/todos/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Todos"],
+    }),
+    editTodo: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/todos/${id}`,
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: (result, error, arg) => [
+        "Todos",
+        { type: "Todo", id: arg.id },
+      ],
+    }),
+    //
   }),
 });
 
-export const { useGetTodosQuery, useAddTodoMutation } = apiSlice;
+export const {
+  useGetTodosQuery,
+  useAddTodoMutation,
+  useDeleteTodoMutation,
+  useEditTodoMutation,
+} = apiSlice;
