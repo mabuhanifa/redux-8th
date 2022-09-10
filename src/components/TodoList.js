@@ -1,28 +1,21 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useGetTodosQuery } from "../redux/features/apiSlice";
 import Todo from "./Todo";
 
 export default function TodoList() {
+  const { filters } = useSelector((state) => state);
   const { data, isLoading } = useGetTodosQuery();
-  
+  console.log(filters);
   const dispatch = useDispatch();
 
   const filterByCompleted = (todo) => {
     return todo.completed !== true;
   };
-  // const filterByStatus = (todo) => {
-  //   const { status } = filters;
-  //   switch (status) {
-  //     case "Complete":
-  //       return todo.completed;
-
-  //     case "Incomplete":
-  //       return !todo.completed;
-
-  //     default:
-  //       return true;
-  //   }
-  // };
+  const filterByStatus = (todo) => {
+    if (filters ==='All') {
+      return todo;
+    }
+  };
 
   // const filterByColors = (todo) => {
   //   const { colors } = filters;

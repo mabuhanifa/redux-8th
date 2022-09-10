@@ -1,4 +1,6 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useGetTodosQuery } from "../redux/features/apiSlice";
+import { filterBy } from "../redux/features/filterSlice";
 
 const numberOfTodos = (no_of_todos) => {
   switch (no_of_todos) {
@@ -13,20 +15,25 @@ const numberOfTodos = (no_of_todos) => {
 
 export default function Footer() {
   const dispatch = useDispatch();
+  const { data, isLoading } = useGetTodosQuery();
   // const todosRemaining = todos.filter((todo) => !todo.completed).length;
   // const { status, colors } = filters;
-
-  const handleStatusChange = (status) => {};
+  const state = useSelector((state) => state);
+  
+  const handleStatusChange = (status) => {
+    dispatch(filterBy(status));
+  };
 
   const handleColorChange = (color) => {
     // if (colors.includes(color)) {
     // } else {
     // }
+    dispatch(filterBy());
   };
 
   return (
     <div className="mt-4 flex justify-between text-xs text-gray-500">
-      <p>{numberOfTodos()} left</p>
+      <p>{numberOfTodos(data?.length)} left</p>
       <ul className="flex space-x-1 items-center text-xs">
         <li
           className={`cursor-pointer`}
@@ -43,7 +50,7 @@ export default function Footer() {
           // ${
           //     status === "Incomplete" && "font-bold"
           // }`
-          onClick={() => handleStatusChange("Incomplete")}
+          onClick={() => handleStatusChange(false)}
         >
           Incomplete
         </li>
@@ -53,7 +60,7 @@ export default function Footer() {
           // ${
           //     status === "Complete" && "font-bold"
           // }
-          onClick={() => handleStatusChange("Complete")}
+          onClick={() => handleStatusChange(true)}
         >
           Complete
         </li>
