@@ -3,23 +3,14 @@ import { useDispatch } from "react-redux";
 import cancelImage from "../assets/images/cancel.png";
 import edit from "../assets/images/edit.png";
 import save from "../assets/images/save.png";
-import deleteTodo from "../redux/todos/thunk/deleteTodo";
-import updateColor from "../redux/todos/thunk/updateColor";
-import updateStatus from "../redux/todos/thunk/updateStatus";
-import updateText from "../redux/todos/thunk/updateText";
-
 export default function Todo({ todo }) {
   const dispatch = useDispatch();
   const [editTodo, setEditTodo] = useState(false);
   const [value, setValue] = useState("");
   const { text, id, completed, color } = todo;
-  const handleStatusChange = (todoId) => {
-    dispatch(updateStatus(todoId, completed));
-  };
+  const handleStatusChange = (todoId) => {};
 
-  const handleColorChange = (todoId, color) => {
-    dispatch(updateColor(todoId, color));
-  };
+  const handleColorChange = (todoId, color) => {};
   const val = (e) => {
     if (e.target.value === "") {
       setValue(text);
@@ -27,12 +18,10 @@ export default function Todo({ todo }) {
       setValue(e.target.value);
     }
   };
-  const handleDelete = (todoId) => {
-    dispatch(deleteTodo(todoId));
-  };
+  const handleDelete = (todoId) => {};
   const updateTodo = (e) => {
     e.preventDefault();
-    dispatch(updateText(id, value));
+
     setEditTodo(false);
   };
   return (

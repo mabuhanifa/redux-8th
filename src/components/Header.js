@@ -3,8 +3,6 @@ import { useDispatch } from "react-redux";
 import tickImage from "../assets/images/double-tick.png";
 import noteImage from "../assets/images/notes.png";
 import plusImage from "../assets/images/plus.png";
-import { allCompleted, clearCompleted } from "../redux/todos/actions";
-import addTodo from "../redux/todos/thunk/addTodo";
 
 export default function Header() {
   const dispatch = useDispatch();
@@ -16,17 +14,13 @@ export default function Header() {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(addTodo(input));
+
     setInput("");
   };
 
-  const completeHadler = () => {
-    dispatch(allCompleted());
-  };
+  const completeHadler = () => {};
 
-  const clearHeandler = () => {
-    dispatch(clearCompleted());
-  };
+  const clearHeandler = () => {};
 
   return (
     <div>
@@ -44,7 +38,7 @@ export default function Header() {
         />
         <button
           type="submit"
-           className={`appearance-none w-8 h-8 bg-[url('${plusImage}')] bg-no-repeat bg-contain`}
+          className={`appearance-none w-8 h-8 bg-[url('${plusImage}')] bg-no-repeat bg-contain`}
         ></button>
       </form>
 
