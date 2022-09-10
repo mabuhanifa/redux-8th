@@ -1,5 +1,6 @@
 import { Provider } from "react-redux";
 import Completed from "./components/Completed";
+import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Navbar from "./components/Navbar";
 import TodoList from "./components/TodoList";
@@ -24,7 +25,7 @@ function App() {
 
           <hr className="mt-4" />
 
-          {/* <Footer /> */}
+          <Footer />
         </div>
       </div>
     </Provider>

@@ -4,7 +4,7 @@ import Todo from "./Todo";
 
 export default function TodoList() {
   const { data, isLoading } = useGetTodosQuery();
-  console.log(data);
+  
   const dispatch = useDispatch();
 
   const filterByCompleted = (todo) => {

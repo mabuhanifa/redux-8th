@@ -14,8 +14,14 @@ export default function Todo({ todo }) {
   const [editVideo, { isLoading, isError, isSuccess }] = useEditTodoMutation();
   const [editTodo, setEditTodo] = useState(false);
   const [value, setValue] = useState("");
-
-  const handleStatusChange = (todoId) => {
+  const val = (e) => {
+    if (e.target.value === "") {
+      setValue(text);
+    } else {
+      setValue(e.target.value);
+    }
+  };
+  const handleStatusChange = () => {
     editVideo({
       id,
       data: {
@@ -24,14 +30,15 @@ export default function Todo({ todo }) {
     });
   };
 
-  const handleColorChange = (todoId, color) => {};
-  const val = (e) => {
-    if (e.target.value === "") {
-      setValue(text);
-    } else {
-      setValue(e.target.value);
-    }
+  const handleColorChange = (id, color) => {
+    editVideo({
+      id,
+      data: {
+        color: color,
+      },
+    });
   };
+ 
   const handleDelete = (todoId) => {
     deleteVideo(todoId);
   };

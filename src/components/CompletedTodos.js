@@ -1,10 +1,14 @@
 import { useDispatch } from "react-redux";
 import cancelImage from "../assets/images/cancel.png";
-import { useEditTodoMutation } from "../redux/features/apiSlice";
+import {
+  useDeleteTodoMutation,
+  useEditTodoMutation
+} from "../redux/features/apiSlice";
 
 export default function CompletedTodos({ todo }) {
   const dispatch = useDispatch();
   const [editVideo, { isLoading, isError, isSuccess }] = useEditTodoMutation();
+  const [deleteVideo] = useDeleteTodoMutation();
   const { text, id, completed, color } = todo;
   const handleStatusChange = (todoId) => {
     editVideo({
@@ -15,8 +19,17 @@ export default function CompletedTodos({ todo }) {
     });
   };
 
-  const handleColorChange = (todoId, color) => {};
-  const handleDelete = (todoId) => {};
+  const handleColorChange = (id, color) => {
+    editVideo({
+      id,
+      data: {
+        color: color,
+      },
+    });
+  };
+  const handleDelete = (id) => {
+    deleteVideo(id);
+  };
 
   return (
     <div className="flex justify-start items-center p-2 hover:bg-gray-100 hover:transition-all space-x-4 border-b border-gray-400/20 last:border-0">
