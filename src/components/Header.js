@@ -1,36 +1,27 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 import tickImage from "../assets/images/double-tick.png";
 import noteImage from "../assets/images/notes.png";
 import plusImage from "../assets/images/plus.png";
 import {
   useAddTodoMutation,
-  useGetTodosQuery,
-  useUpdateAllTodoMutation
+  useDeleteTodoMutation,
+  useEditTodoMutation,
+  useGetTodosQuery
 } from "../redux/features/apiSlice";
-import { clearComplete } from "../redux/features/filterSlice";
 
 export default function Header() {
-  const dispatch = useDispatch();
-
   const [input, setInput] = useState("");
   const { data: todos } = useGetTodosQuery();
-  // let todos = data?.map((todo) => {
-  //   return {
-  //     ...todo,
-  //     completed: true,
-  //   };
-  // });
-  // console.log(todos);
-  const [addVideo] = useAddTodoMutation();
-  const [updateAllTodo] = useUpdateAllTodoMutation();
+  const [deleteTodo] = useDeleteTodoMutation();
+  const [addTodo] = useAddTodoMutation();
+  const [editTodo] = useEditTodoMutation();
   const handleInput = (e) => {
     setInput(e.target.value);
   };
 
   const submitHandler = (e) => {
     e.preventDefault();
-    addVideo({
+    addTodo({
       text: input,
       completed: false,
     });
@@ -39,7 +30,7 @@ export default function Header() {
 
   const completeHandler = () => {
     for (let i = 0; i < todos.length; i++) {
-      updateAllTodo({
+      editTodo({
         id: todos[i]?.id,
         data: {
           completed: true,
@@ -49,7 +40,11 @@ export default function Header() {
   };
 
   const clearHandler = () => {
-    dispatch(clearComplete());
+    for (let i = 0; i < todos.length; i++) {
+      if (todos[i]?.completed) {
+        deleteTodo(todos[i]?.id);
+      }
+    }
   };
 
   return (

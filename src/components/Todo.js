@@ -8,9 +8,9 @@ import {
 } from "../redux/features/apiSlice";
 export default function Todo({ todo }) {
   const { text, id, completed, color } = todo;
-  const [deleteVideo] = useDeleteTodoMutation();
-  const [editVideo] = useEditTodoMutation();
-  const [editTodo, setEditTodo] = useState(false);
+  const [deleteTodo] = useDeleteTodoMutation();
+  const [editTodo] = useEditTodoMutation();
+  const [editTodos, setEditTodos] = useState(false);
   const [value, setValue] = useState("");
   const val = (e) => {
     if (e.target.value === "") {
@@ -19,8 +19,9 @@ export default function Todo({ todo }) {
       setValue(e.target.value);
     }
   };
+
   const handleStatusChange = () => {
-    editVideo({
+    editTodo({
       id,
       data: {
         completed: !completed,
@@ -29,7 +30,7 @@ export default function Todo({ todo }) {
   };
 
   const handleColorChange = (id, color) => {
-    editVideo({
+    editTodo({
       id,
       data: {
         color: color,
@@ -38,17 +39,17 @@ export default function Todo({ todo }) {
   };
 
   const handleDelete = (todoId) => {
-    deleteVideo(todoId);
+    deleteTodo(todoId);
   };
   const updateTodo = (e) => {
     e.preventDefault();
-    editVideo({
+    editTodo({
       id,
       data: {
         text: value,
       },
     });
-    setEditTodo(false);
+    setEditTodos(false);
   };
   return (
     <div className="flex justify-start items-center p-2 hover:bg-gray-100 hover:transition-all space-x-4 border-b border-gray-400/20 last:border-0">
@@ -78,9 +79,9 @@ export default function Todo({ todo }) {
           type="text"
           className={`w-96 text-gray-700 p-0.5 ${
             completed && "text-green-600"
-          } ${editTodo && "bg-gray-200"}`}
+          } ${editTodos && "bg-gray-200"}`}
           placeholder={text}
-          disabled={!editTodo}
+          disabled={!editTodos}
           defaultValue={text}
           onChange={val}
         />
@@ -110,7 +111,7 @@ export default function Todo({ todo }) {
       <img
         src={save}
         className={`${
-          editTodo ? "flex-shrink-0 w-4 h-4 ml-2 cursor-pointer" : "hidden"
+          editTodos ? "flex-shrink-0 w-4 h-4 ml-2 cursor-pointer" : "hidden"
         }`}
         alt="Cancel"
         onClick={updateTodo}
@@ -118,10 +119,10 @@ export default function Todo({ todo }) {
       <img
         src={edit}
         className={`${
-          editTodo ? "hidden" : "flex-shrink-0 w-4 h-4 ml-2 cursor-pointer"
+          editTodos ? "hidden" : "flex-shrink-0 w-4 h-4 ml-2 cursor-pointer"
         }`}
         alt="Edit"
-        onClick={() => setEditTodo(true)}
+        onClick={() => setEditTodos(true)}
       />
       <img
         src={cancelImage}
