@@ -1,5 +1,4 @@
 import { Provider } from "react-redux";
-import Completed from "./components/Completed";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Navbar from "./components/Navbar";
@@ -21,7 +20,7 @@ function App() {
 
           <hr className="mt-4" />
 
-          <Completed />
+          {/* <Completed /> */}
 
           <hr className="mt-4" />
 

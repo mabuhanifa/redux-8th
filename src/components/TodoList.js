@@ -3,7 +3,7 @@ import { useGetTodosQuery } from "../redux/features/apiSlice";
 import Todo from "./Todo";
 
 export default function TodoList() {
-  const { filters } = useSelector((state) => state);
+  const { filters } = useSelector((state) => state.filters);
   const { data, isLoading } = useGetTodosQuery();
   console.log(filters);
   const dispatch = useDispatch();
@@ -14,6 +14,9 @@ export default function TodoList() {
   const filterByStatus = (todo) => {
     if (filters ==='All') {
       return todo;
+    }
+    else{
+      return todo.completed ===filters;
     }
   };
 
@@ -32,7 +35,7 @@ export default function TodoList() {
         // .filter(filterByColors)
         // .filter(filterByCompleted)
 
-        data?.filter(filterByCompleted).map((todo) => (
+        data?.filter(filterByStatus).map((todo) => (
           <Todo todo={todo} key={todo.id} />
         ))
       }
