@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useGetTodosQuery } from "../redux/features/apiSlice";
-import { filterBy } from "../redux/features/filterSlice";
+import { addColor, filterBy, removeColor } from "../redux/features/filterSlice";
 
 const numberOfTodos = (no_of_todos) => {
   switch (no_of_todos) {
@@ -16,19 +16,20 @@ const numberOfTodos = (no_of_todos) => {
 export default function Footer() {
   const dispatch = useDispatch();
   const { data, isLoading } = useGetTodosQuery();
+  const { filters, colors } = useSelector((state) => state.filters);
   // const todosRemaining = todos.filter((todo) => !todo.completed).length;
-  // const { status, colors } = filters;
-  const state = useSelector((state) => state);
-  
+  console.log(colors);
+
   const handleStatusChange = (status) => {
     dispatch(filterBy(status));
   };
 
   const handleColorChange = (color) => {
-    // if (colors.includes(color)) {
-    // } else {
-    // }
-    dispatch(filterBy());
+    if (colors.includes(color)) {
+      dispatch(removeColor(color));
+    } else {
+      dispatch(addColor(color));
+    }
   };
 
   return (
@@ -36,30 +37,21 @@ export default function Footer() {
       <p>{numberOfTodos(data?.length)} left</p>
       <ul className="flex space-x-1 items-center text-xs">
         <li
-          className={`cursor-pointer`}
-          // ${
-          //     status === "All" && "font-bold"
-          // }`
+          className={`cursor-pointer ${filters === "All" && "font-bold"}`}
           onClick={() => handleStatusChange("All")}
         >
           All
         </li>
         <li>|</li>
         <li
-          className={`cursor-pointer `}
-          // ${
-          //     status === "Incomplete" && "font-bold"
-          // }`
+          className={`cursor-pointer ${filters === false && "font-bold"}`}
           onClick={() => handleStatusChange(false)}
         >
           Incomplete
         </li>
         <li>|</li>
         <li
-          className={`cursor-pointer `}
-          // ${
-          //     status === "Complete" && "font-bold"
-          // }
+          className={`cursor-pointer ${filters === true && "font-bold"}`}
           onClick={() => handleStatusChange(true)}
         >
           Complete
@@ -67,24 +59,21 @@ export default function Footer() {
         <li></li>
         <li></li>
         <li
-          className={`h-3 w-3 border-2 border-green-500 md:hover:bg-green-500 rounded-full cursor-pointer `}
+          className={`h-3 w-3 border-2 border-green-500 md:hover:bg-green-500 rounded-full cursor-pointer ${
+            colors.includes("green") && "bg-green-500"
+          }`}
           onClick={() => handleColorChange("green")}
-          // ${
-          //     colors.includes("green") && "bg-green-500"
-          // }
         ></li>
         <li
-          className={`h-3 w-3 border-2 border-red-500 md:hover:bg-red-500 rounded-full cursor-pointer `}
-          // ${
-          //     colors.includes("red") && "bg-red-500"
-          // }
+          className={`h-3 w-3 border-2 border-red-500 md:hover:bg-red-500 rounded-full cursor-pointer ${
+            colors.includes("red") && "bg-red-500"
+          }`}
           onClick={() => handleColorChange("red")}
         ></li>
         <li
-          className={`h-3 w-3 border-2 border-yellow-500 md:hover:bg-yellow-500 rounded-full cursor-pointer `}
-          // ${
-          //     colors.includes("yellow") && "bg-yellow-500"
-          // }
+          className={`h-3 w-3 border-2 border-yellow-500 md:hover:bg-yellow-500 rounded-full cursor-pointer ${
+            colors.includes("yellow") && "bg-yellow-500"
+          }`}
           onClick={() => handleColorChange("yellow")}
         ></li>
       </ul>
