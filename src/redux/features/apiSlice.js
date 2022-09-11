@@ -37,6 +37,17 @@ export const apiSlice = createApi({
         { type: "Todo", id: arg.id },
       ],
     }),
+    updateAllTodo: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/todos/${id}`,
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: (result, error, arg) => [
+        "Todos",
+        { type: "Todo", id: arg.id },
+      ],
+    }),
     //
   }),
 });
@@ -46,4 +57,5 @@ export const {
   useAddTodoMutation,
   useDeleteTodoMutation,
   useEditTodoMutation,
+  useUpdateAllTodoMutation,
 } = apiSlice;

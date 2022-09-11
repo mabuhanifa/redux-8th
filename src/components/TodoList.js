@@ -6,7 +6,7 @@ export default function TodoList() {
   const { filters, colors, clearAll, clearCompleted } = useSelector(
     (state) => state.filters
   );
-  console.log(clearCompleted);
+ 
   const { data: todos } = useGetTodosQuery();
   // const todos = data;
 

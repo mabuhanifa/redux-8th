@@ -76,8 +76,8 @@ export default function Todo({ todo }) {
       <form onSubmit={updateTodo} className="select-none flex-1">
         <input
           type="text"
-          className={`w-96 placeholder-gray-700 p-0.5 ${
-            completed && "placeholder-green-600"
+          className={`w-96 text-gray-700 p-0.5 ${
+            completed && "text-green-600"
           } ${editTodo && "bg-gray-200"}`}
           placeholder={text}
           disabled={!editTodo}

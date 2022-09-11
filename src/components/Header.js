@@ -3,16 +3,27 @@ import { useDispatch } from "react-redux";
 import tickImage from "../assets/images/double-tick.png";
 import noteImage from "../assets/images/notes.png";
 import plusImage from "../assets/images/plus.png";
-import { useAddTodoMutation } from "../redux/features/apiSlice";
-import { clearAllTodo, clearComplete } from "../redux/features/filterSlice";
+import {
+  useAddTodoMutation,
+  useGetTodosQuery,
+  useUpdateAllTodoMutation
+} from "../redux/features/apiSlice";
+import { clearComplete } from "../redux/features/filterSlice";
 
 export default function Header() {
   const dispatch = useDispatch();
 
   const [input, setInput] = useState("");
-
-  const [addVideo, { isLoading, isSuccess, isError }] = useAddTodoMutation();
-
+  const { data: todos } = useGetTodosQuery();
+  // let todos = data?.map((todo) => {
+  //   return {
+  //     ...todo,
+  //     completed: true,
+  //   };
+  // });
+  // console.log(todos);
+  const [addVideo] = useAddTodoMutation();
+  const [updateAllTodo] = useUpdateAllTodoMutation();
   const handleInput = (e) => {
     setInput(e.target.value);
   };
@@ -27,7 +38,14 @@ export default function Header() {
   };
 
   const completeHandler = () => {
-    dispatch(clearAllTodo());
+    for (let i = 0; i < todos.length; i++) {
+      updateAllTodo({
+        id: todos[i]?.id,
+        data: {
+          completed: true,
+        },
+      });
+    }
   };
 
   const clearHandler = () => {
