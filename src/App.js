@@ -20,10 +20,6 @@ function App() {
 
           <hr className="mt-4" />
 
-          {/* <Completed /> */}
-
-          <hr className="mt-4" />
-
           <Footer />
         </div>
       </div>

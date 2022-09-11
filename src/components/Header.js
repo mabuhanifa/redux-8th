@@ -4,6 +4,7 @@ import tickImage from "../assets/images/double-tick.png";
 import noteImage from "../assets/images/notes.png";
 import plusImage from "../assets/images/plus.png";
 import { useAddTodoMutation } from "../redux/features/apiSlice";
+import { clearAllTodo, clearComplete } from "../redux/features/filterSlice";
 
 export default function Header() {
   const dispatch = useDispatch();
@@ -25,9 +26,13 @@ export default function Header() {
     setInput("");
   };
 
-  const completeHadler = () => {};
+  const completeHandler = () => {
+    dispatch(clearAllTodo());
+  };
 
-  const clearHeandler = () => {};
+  const clearHandler = () => {
+    dispatch(clearComplete());
+  };
 
   return (
     <div>
@@ -50,11 +55,11 @@ export default function Header() {
       </form>
 
       <ul className="flex justify-between my-4 text-xs text-gray-500">
-        <li className="flex space-x-1 cursor-pointer" onClick={completeHadler}>
+        <li className="flex space-x-1 cursor-pointer" onClick={completeHandler}>
           <img className="w-4 h-4" src={tickImage} alt="Complete" />
           <span>Complete All Tasks</span>
         </li>
-        <li className="cursor-pointer" onClick={clearHeandler}>
+        <li className="cursor-pointer" onClick={clearHandler}>
           Clear completed
         </li>
       </ul>

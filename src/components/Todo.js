@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 import cancelImage from "../assets/images/cancel.png";
 import edit from "../assets/images/edit.png";
 import save from "../assets/images/save.png";
@@ -9,9 +8,8 @@ import {
 } from "../redux/features/apiSlice";
 export default function Todo({ todo }) {
   const { text, id, completed, color } = todo;
-  const dispatch = useDispatch();
   const [deleteVideo] = useDeleteTodoMutation();
-  const [editVideo, { isLoading, isError, isSuccess }] = useEditTodoMutation();
+  const [editVideo] = useEditTodoMutation();
   const [editTodo, setEditTodo] = useState(false);
   const [value, setValue] = useState("");
   const val = (e) => {
@@ -38,7 +36,7 @@ export default function Todo({ todo }) {
       },
     });
   };
- 
+
   const handleDelete = (todoId) => {
     deleteVideo(todoId);
   };

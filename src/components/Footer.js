@@ -15,10 +15,10 @@ const numberOfTodos = (no_of_todos) => {
 
 export default function Footer() {
   const dispatch = useDispatch();
-  const { data, isLoading } = useGetTodosQuery();
+  const { data } = useGetTodosQuery();
   const { filters, colors } = useSelector((state) => state.filters);
-  // const todosRemaining = todos.filter((todo) => !todo.completed).length;
-  console.log(colors);
+   const todosRemaining = data?.filter((todo) => !todo.completed).length;
+  
 
   const handleStatusChange = (status) => {
     dispatch(filterBy(status));
@@ -34,7 +34,7 @@ export default function Footer() {
 
   return (
     <div className="mt-4 flex justify-between text-xs text-gray-500">
-      <p>{numberOfTodos(data?.length)} left</p>
+      <p>{numberOfTodos(todosRemaining)} left</p>
       <ul className="flex space-x-1 items-center text-xs">
         <li
           className={`cursor-pointer ${filters === "All" && "font-bold"}`}
